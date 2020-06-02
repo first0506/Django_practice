@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<h2>INDEX</h2>
+<hr>
+{% for vote in votes %}
+    <h5>{{ forloop.counter }}번 이슈</h5>
+    <h2>{{ vote.title }}</h2>
+    <h5><a href="{% url 'vote:detail' vote.pk %}" class="text-decoration-none text-dark">DETAIL</a></h5>
+    <hr>
+{% endfor %}
+
+{% endblock %}

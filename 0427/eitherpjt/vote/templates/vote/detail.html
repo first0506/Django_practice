@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<h2>DETAIL</h2>
+<a href="{% url 'vote:index' %}">BACK</a>
+<hr>
+<h1 class='d-flex justify-content-center'>{{ vote.title }}</h1>
+{% if total == 0 %}
+    <div class='row row-cols-2'>
+        <div class='col d-flex justify-content-start'>{{vote.issue_a}}</div>
+        <div class='col d-flex justify-content-end'>{{vote.issue_b}}</div>
+    </div>
+    <div style='height:50px' class="progress">
+      <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+      <div class="progress-bar bg-danger" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
+    <p class='my-3'>첫번째 투표의 주인공이 되세요!!</p>
+{% else %}
+    <div class='row row-cols-2'>
+        <div class='col d-flex justify-content-start'>{{vote.issue_a}}</div>
+        <div class='col d-flex justify-content-end'>{{vote.issue_b}}</div>
+    </div>
+    <div style='height:50px' class="progress">
+      <div class="progress-bar text-white d-flex justify-content-center" role="progressbar" style="width: {{a_percent}}%" aria-valuenow="{{a_percent}}" aria-valuemin="0" aria-valuemax="100">{{a_percent}}%</div>
+      <div class="progress-bar bg-danger text-white d-flex justify-content-center" role="progressbar" style="width: {{b_percent}}%" aria-valuenow="{{b_percent}}" aria-valuemin="0" aria-valuemax="100">{{b_percent}}%</div>
+    </div>
+{% endif %}
+<hr>
+
+<h5>댓글 작성</h5>
+<h7>댓글을 작성하셔야 투표하실 수 있습니다.</h7>
+<br>
+<form action="{% url 'vote:comments_create' vote.pk %}" method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button>작성</button>
+</form>
+<hr>
+
+<h5>댓글목록 ({{ vote.comment_set.all|length }}개의 댓글이 있습니다.)</h5>
+{% for comment in vote.comment_set.all %}
+    {% if comment.votes == 'LEFT' %}
+        <p class='text-primary'>[{{ vote.issue_a }}] {{ comment.content }}</p>
+    {% else %}
+        <p class='text-danger'>[{{ vote.issue_b }}] {{ comment.content }}</p>
+    {% endif %}
+    <hr>
+{% endfor %}
+
+{% endblock %}

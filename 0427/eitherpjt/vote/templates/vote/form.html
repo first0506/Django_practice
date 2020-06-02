@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+<h2>CREATE</h2>
+<a href="{% url 'vote:index' %}">BACK</a>
+<hr>
+<form action="" method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="제출">
+</form>
+
+{% endblock %}

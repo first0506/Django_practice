@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">{{ articles.0.0 }}</th>
+          <th scope="col">Title</th>
+          <th scope="col">Content</th>
+          <th scope="col">Creation Time</th>
+        </tr>
+      </thead>
+      <tbody>
+          {% for data in articles %}
+              {% if forloop.counter0 > 0 %}
+                <tr>
+                  <th scope="row">{{forloop.counter0}}</th>
+                  <td>{{data.0}}</td>
+                  <td>{{data.1}}</td>
+                  <td>{{data.2}}</td>
+                </tr>
+              {% endif %}
+          {% endfor %}
+      </tbody>
+    </table>
+{% endblock %}

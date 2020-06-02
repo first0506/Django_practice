@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<a href='/articles/new/'>NEW</a>
+<h2>게시글 모음</h2>
+<ul>
+    {% for article in articles %}
+    <li>제목: {{ article.title }}</li>
+    <p>내용: {{article.content}}</p>
+    {% endfor %}
+</ul>
+{% endblock %}

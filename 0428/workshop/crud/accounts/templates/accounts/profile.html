@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>{{ user.username }}</h1>
+{% with user_followers=user.followers.all %}
+    {% if request.user != user %}
+        <hr>
+        {% if request.user in user_followers %}
+            <a href="{% url 'accounts:follow' user.username %}">언팔로우</a>
+        {% else %}
+            <a href="{% url 'accounts:follow' user.username %}">팔로우</a>
+        {% endif %}
+    {% endif %}
+    <p> 팔로워: {{ user_followers|length }}</p>
+    <p> 팔로잉: {{ user.followings.count }}</p>
+    <ul>
+        {% for follwer in user_followers %}
+            <li>{{follwer}}</li>
+        {% endfor %}
+    </ul>
+{% endwith %}
+<hr>
+
+{% endblock %}
